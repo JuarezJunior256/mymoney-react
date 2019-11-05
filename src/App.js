@@ -1,32 +1,20 @@
 import React from 'react'
-import useGet from './useGet'
-import useDelete from './useDelete'
-import usePost from './usePost'
-import axios from 'axios'
-
-const url = 'https://mymony-react.firebaseio.com/movimentacoes.json'
-
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+// importando components
+import Header from './elements/header'
+import Home from './pages/Home/index'
+import Movimentacoes from './pages/Movimentacoes'
 
 function App() {
-  const data = useGet(url)
-  const [postData, post] = usePost(url)
-  const [deleteData, remove] = useDelete()
-  
-  const save = () => {
-    post({valor: 10, descricao: 'ola'})
-  }
-  const doRemove = () => {
-    remove('https://mymony-react.firebaseio.com/movimentacoes/-LsDuP9Mf4hIvifXpuQi.json')
-  }
   return (
+   <Router>
     <div>
-      <h1>My Money</h1>
-      { JSON.stringify(data)}
-      { data.loading && <p>Carregando...</p>}
-      <button onClick={save}>Salvar</button>
-      <button onClick={doRemove}>Delete</button>
+     <Header/>
+     <Route path='/' exact component={Home}/>
+     <Route path='/movimentacoes/:data' exact component={Movimentacoes}/>
     </div>
-  )
+   </Router> 
+  ) 
 }
 
 export default App
